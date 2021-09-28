@@ -24,7 +24,5 @@ public class App {
         } catch (IOException | CustomNumberParseException e) {
             logger.catching(e);
         }
-        System.out.println(Adder.add(new CustomNumber(45.5), new CustomNumber(78.5)));
-
     }
 }
