@@ -12,10 +12,11 @@
             <PatternLayout pattern="${consoleLogPattern}"/>
         </Console>
 
-        <RollingFile name="RollingFile" fileName="logs/log.txt"
+        <RollingFile name="RollingFile" fileName="logs/log.txt" append="true"
                      filePattern="${filePattern}">
             <PatternLayout pattern="${fileLogPattern}"/>
             <Policies>
+                <TimeBasedTriggeringPolicy/>
                 <SizeBasedTriggeringPolicy size="5 KB"/>
             </Policies>
 
