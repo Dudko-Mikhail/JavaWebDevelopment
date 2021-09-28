@@ -1,0 +1,11 @@
+2021-09-28 10:08:36.212 [main] ERROR by.epam.pretask.entry.App - method=main msg=Catching
+by.epam.pretask.exceptions.CustomNumberParseException: Invalid number format: l
+	at by.epam.pretask.utils.Validator.validate(Validator.java:11) ~[classes/:?]
+	at by.epam.pretask.reader.CustomNumbersFileReader.readNumbers(CustomNumbersFileReader.java:26) ~[classes/:?]
+	at by.epam.pretask.entry.App.main(App.java:22) [classes/:?]
+Caused by: java.lang.NumberFormatException: For input string: "l"
+	at jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054) ~[?:?]
+	at jdk.internal.math.FloatingDecimal.parseDouble(FloatingDecimal.java:110) ~[?:?]
+	at java.lang.Double.parseDouble(Double.java:651) ~[?:?]
+	at by.epam.pretask.utils.Validator.validate(Validator.java:8) ~[classes/:?]
+	... 2 more
