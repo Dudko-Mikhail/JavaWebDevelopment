@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class CustomNumbersFileReader {
-    private static final String SPACE_SPLITERATOR = "\s+";
+    private static final String SPACE_SPLITERATOR = "\\s+";
 
     public ArrayList<CustomNumber> readNumbers(String filePath) throws IOException, CustomNumberParseException {
         ArrayList<CustomNumber> customNumbers = new ArrayList<>();
