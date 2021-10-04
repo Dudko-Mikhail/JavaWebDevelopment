@@ -27,20 +27,16 @@ public class CustomParserTest {
     }
 
     @Test(dataProvider = "provider")
-    public void parseTest(String lines[], Integer[] resultArray) {
+    public void parseTest(String[] lines, Integer[] expected) {
         ArrayList<String> strings = new ArrayList<>(Arrays.asList(lines));
         Integer[] numbers = parser.parse(strings);
-        int actual = Arrays.compare(numbers, resultArray);
-        int expected = 0;
-        Assert.assertEquals(actual, expected);
+        Assert.assertEquals(numbers, expected);
     }
 
     @Test
     public void parseTestWithNullParameter() {
-        Integer[] expectedArray = new ArrayList<Integer>().toArray(Integer[]::new);
-        Integer[] actualArray = parser.parse(null);
-        int expected = 0;
-        int actual = Arrays.compare(actualArray, expectedArray);
+        Integer[] expected = new ArrayList<Integer>().toArray(Integer[]::new);
+        Integer[] actual = parser.parse(null);
         Assert.assertEquals(actual, expected);
     }
 }
