@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class StreamCustomFileReaderImpl implements CustomFileReader {
     private static Logger logger = LogManager.getLogger();
@@ -24,8 +25,9 @@ public class StreamCustomFileReaderImpl implements CustomFileReader {
             throw new CustomReaderException("File " + filePath + " doesn't exist");
         }
         List<String> lines = new ArrayList<>();
-        try (BufferedReader reader = Files.newBufferedReader(path)) {
-            lines.addAll(reader.lines().toList());
+        try {
+            Stream<String> linesStream = Files.lines(path);
+            lines.addAll(linesStream.toList());
         } catch (IOException e) {
             logger.catching(e);
         }

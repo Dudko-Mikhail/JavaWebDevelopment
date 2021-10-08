@@ -20,10 +20,11 @@ public class CustomParser {
 
     private List<Integer> parseLine(String line) {
         ArrayList<Integer> integers = new ArrayList<>();
-        String[] numbers = line.strip().split(DELIMITER_REGEX);
-        for (int i = 0; i < numbers.length; i++) {
-            if (IntValidator.isValid(numbers[i])) {
-                int number = Integer.parseInt(numbers[i]);
+        String[] numbers = line.strip()
+                               .split(DELIMITER_REGEX);
+        for (String s : numbers) {
+            if (IntValidator.isValid(s)) {
+                int number = Integer.parseInt(s);
                 integers.add(number);
             }
         }
