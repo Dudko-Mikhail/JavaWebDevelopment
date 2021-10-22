@@ -9,7 +9,7 @@ import by.bsu.shapetask.validator.TriangleValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Triangle extends Shape implements Observable { // TODO подумать про добавление валидатора
+public class Triangle extends Shape implements Observable {
     private Point a;
     private Point b;
     private Point c;

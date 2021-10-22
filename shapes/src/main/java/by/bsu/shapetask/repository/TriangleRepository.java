@@ -5,7 +5,7 @@ import by.bsu.shapetask.repository.TriangleSpecification;
 
 import java.util.*;
 
-public class TriangleRepository { // TODO implements repository
+public class TriangleRepository {
     private static TriangleRepository instance;
     private List<Triangle> triangles;
 

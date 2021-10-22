@@ -11,9 +11,9 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
-public class TriangleCalculationServiceImpl implements TriangleCalculationService { // TODO усовершенствовать путём добавления тира треугольника (прямоугольный, равнобедренный, равносторонний) ???
-    private static final int SIDES_NUMBER = 3; // TODO переделать методы, использую метод нохождения длинн сторон
-    private static TriangleCalculationServiceImpl INSTANCE; // TODO переделать метод computeTriangleParameters
+public class TriangleCalculationServiceImpl implements TriangleCalculationService { // TODO fix методы, использую метод нохождения длинн сторон
+    private static final int SIDES_NUMBER = 3;
+    private static TriangleCalculationServiceImpl INSTANCE;
 
     @Override
     public OptionalDouble computeArea(Triangle triangle) {
