@@ -16,10 +16,7 @@ public class CustomParser {
         return customParser;
     }
 
-    public double[] parseLine(String line) throws CustomReaderException { // fixme combine exceptions
-        if (line == null) {
-            throw new CustomReaderException("Cannot parse line: line is null");
-        }
+    public double[] parseLine(String line) throws CustomReaderException {
         LineValidator validator = LineValidator.getInstance();
         if (!validator.validateLine(line)) {
             throw new CustomReaderException("Cannot parse line: line isn't valid");

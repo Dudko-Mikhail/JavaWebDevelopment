@@ -29,7 +29,7 @@ public class Warehouse {
         return map.keySet();
     }
 
-    public boolean remove(UUID key, TriangleParameters value) { // TODO null, возможно, проверка не нужна
+    public boolean remove(UUID key, TriangleParameters value) {
         return map.remove(key, value);
     }
 
