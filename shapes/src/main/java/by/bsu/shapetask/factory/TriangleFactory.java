@@ -7,7 +7,7 @@ import by.bsu.shapetask.exception.ShapeException;
 public class TriangleFactory {
     private static TriangleFactory instance;
 
-    public static TriangleFactory getInstance() {
+    public static TriangleFactory getInstance() { // TODO удалить 1 из методов
         if (instance == null) {
             instance = new TriangleFactory();
         }

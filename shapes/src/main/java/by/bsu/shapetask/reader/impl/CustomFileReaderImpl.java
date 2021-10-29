@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomFileReaderImpl implements CustomFileReader {
-    private static Logger logger = LogManager.getLogger();
 
     public List<String> readLines(String filePath) throws CustomReaderException {
         if (filePath == null) {
@@ -26,7 +25,7 @@ public class CustomFileReaderImpl implements CustomFileReader {
         try {
             lines.addAll(Files.readAllLines(path));
         } catch (IOException e) {
-            logger.catching(e);
+            throw new CustomReaderException(e);
         }
         return lines;
     }

@@ -1,7 +1,6 @@
 package by.bsu.shapetask.repository;
 
 import by.bsu.shapetask.entity.Triangle;
-import by.bsu.shapetask.repository.TriangleSpecification;
 
 import java.util.*;
 

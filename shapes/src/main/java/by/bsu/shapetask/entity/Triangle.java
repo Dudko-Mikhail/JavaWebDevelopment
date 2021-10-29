@@ -91,6 +91,18 @@ public class Triangle extends Shape implements Observable {
         }
     }
 
+    public boolean equalsIgnoreNameAndId(Triangle triangle) {
+        if (this == triangle) {
+            return true;
+        }
+        if (triangle == null) {
+            return false;
+        }
+        if (a != null ? !a.equals(triangle.a) : triangle.a != null) return false;
+        if (b != null ? !b.equals(triangle.b) : triangle.b != null) return false;
+        return c != null ? c.equals(triangle.c) : triangle.c == null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
