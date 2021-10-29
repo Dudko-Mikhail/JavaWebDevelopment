@@ -78,7 +78,7 @@ public class DomBuilder extends AbstractBuilder {
         Set<Depositor> depositors = new HashSet<>();
         for (int i = 0; i < depositorList.getLength(); i++) {
             Element depositorElement = (Element) depositorList.item(0);
-            String name = extractElementTextContent(depositorElement, BankXmlTag.NAME.getValue());
+            String name = depositorElement.getAttribute(BankXmlAttribute.NAME.getValue());
             Depositor depositor = new Depositor(name);
             NodeList depositList = depositorElement.getElementsByTagName(BankXmlTag.DEPOSIT.getValue());
             depositor.setDeposits(buildDeposits(depositList));

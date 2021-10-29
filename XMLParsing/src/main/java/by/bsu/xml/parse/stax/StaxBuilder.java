@@ -92,27 +92,6 @@ public class StaxBuilder extends AbstractBuilder {
         throw new XMLStreamException("Unknown element in tag <bank>");
     }
 
-    private BankXmlTag extractBankXmlTagFromTagName(String tag) {
-        return switch (tag) {
-            case "moneyAmount" -> BankXmlTag.MONEY_AMOUNT;
-            case "depositTerm" -> BankXmlTag.DEPOSIT_TERM;
-            case "depositType" -> BankXmlTag.DEPOSIT_TYPE;
-            default -> BankXmlTag.valueOf(tag.toUpperCase());
-        };
-    }
-
-    private String extractXMLTagTextContent(XMLStreamReader reader) throws XMLStreamException {
-        String text = null;
-        while (reader.hasNext()) {
-            int type = reader.next();
-            if (type == XMLStreamConstants.CHARACTERS) {
-                text = reader.getText();
-                break;
-            }
-        }
-        return text;
-    }
-
     private Set<Depositor> buildDepositors(XMLStreamReader reader) throws XMLStreamException {
         Set<Depositor> depositors = new HashSet<>();
         Depositor depositor = null;
@@ -123,8 +102,10 @@ public class StaxBuilder extends AbstractBuilder {
                     String name = reader.getLocalName();
                     BankXmlTag currentXmlTag = extractBankXmlTagFromTagName(name);
                     switch (currentXmlTag) { // TODO  отдельный метод
-                        case DEPOSITOR -> depositor = new Depositor("");
-                        case NAME -> depositor.setName(extractXMLTagTextContent(reader));
+                        case DEPOSITOR -> {
+                            String depositorName = reader.getAttributeValue(null, BankXmlAttribute.NAME.getValue());
+                            depositor = new Depositor(depositorName);
+                        }
                         case DEPOSITS -> depositor.setDeposits(buildDeposits(reader));
                     }
                 }
@@ -195,5 +176,26 @@ public class StaxBuilder extends AbstractBuilder {
             }
         }
         throw new XMLStreamException("Unknown element in tag <deposits>");
+    }
+
+    private BankXmlTag extractBankXmlTagFromTagName(String tag) {
+        return switch (tag) {
+            case "moneyAmount" -> BankXmlTag.MONEY_AMOUNT;
+            case "depositTerm" -> BankXmlTag.DEPOSIT_TERM;
+            case "depositType" -> BankXmlTag.DEPOSIT_TYPE;
+            default -> BankXmlTag.valueOf(tag.toUpperCase());
+        };
+    }
+
+    private String extractXMLTagTextContent(XMLStreamReader reader) throws XMLStreamException {
+        String text = null;
+        while (reader.hasNext()) {
+            int type = reader.next();
+            if (type == XMLStreamConstants.CHARACTERS) {
+                text = reader.getText();
+                break;
+            }
+        }
+        return text;
     }
 }

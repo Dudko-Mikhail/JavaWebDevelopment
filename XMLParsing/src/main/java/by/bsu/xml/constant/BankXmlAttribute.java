@@ -3,7 +3,8 @@ package by.bsu.xml.constant;
 public enum BankXmlAttribute {
     BANK_ID("bankId"),
     ACCOUNT_ID("accountId"),
-    CURRENCY("currency");
+    CURRENCY("currency"),
+    NAME("name");
 
     private final String value;
 

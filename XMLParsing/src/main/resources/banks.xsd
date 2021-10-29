@@ -33,13 +33,6 @@
 
     <complexType name="Depositor">
         <sequence>
-            <element name="name">
-                <simpleType>
-                    <restriction base="tns:nonEmptyString">
-                        <maxLength value="40"/>
-                    </restriction>
-                </simpleType>
-            </element>
             <element name="deposits">
                 <complexType>
                     <sequence>
@@ -48,6 +41,13 @@
                 </complexType>
             </element>
         </sequence>
+        <attribute name="name" use="required">
+            <simpleType>
+                <restriction base="tns:nonEmptyString">
+                    <maxLength value="40"/>
+                </restriction>
+            </simpleType>
+        </attribute>
     </complexType>
 
     <complexType name="Deposit">
