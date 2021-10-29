@@ -14,11 +14,6 @@
                 </element>
             </sequence>
         </complexType>
-        <key name="bankName"> <!-- TODO remove -->
-            <selector xpath="./tns:bank"/>
-            <field xpath="tns:name"/>
-            <field xpath="tns:country"/>
-        </key>
     </element>
 
     <complexType name="Bank">
@@ -64,13 +59,7 @@
                             <restriction base="tns:nonNegativeDecimal"/>
                         </simpleType>
                     </element>
-                    <element name="depositTerm">
-                        <simpleType>
-                            <restriction base="date">
-                                <!-- TODO add pattern -->
-                            </restriction>
-                        </simpleType>
-                    </element>
+                    <element name="depositTerm" type="date"/>
                     <element name="depositType">
                         <simpleType>
                             <restriction base="string">
