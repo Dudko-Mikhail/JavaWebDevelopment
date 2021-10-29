@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.example.com/banks"
+        xmlns:tns="http://www.example.com/banks"
+        elementFormDefault="qualified">
+    <element name="banks"> <!-- TODO add optional attribute (somewhere) -->
+        <complexType>
+            <sequence>
+                <element name="bank" type="tns:Bank" maxOccurs="unbounded">
+                    <key name="accountId">
+                        <selector xpath="tns:depositors/tns:depositor/tns:deposits/tns:deposit"/>
+                        <field xpath="@accountId"/>
+                    </key>
+                </element>
+            </sequence>
+        </complexType>
+        <key name="bankName"> <!-- TODO remove -->
+            <selector xpath="./tns:bank"/>
+            <field xpath="tns:name"/>
+            <field xpath="tns:country"/>
+        </key>
+    </element>
+
+    <complexType name="Bank">
+        <sequence>
+            <element name="name" type="tns:nonEmptyString"/>
+            <element name="country" type="tns:nonEmptyString"/>
+            <element name="depositors">
+                <complexType>
+                    <sequence>
+                        <element name="depositor" type="tns:Depositor" maxOccurs="unbounded"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+        <attribute name="bankId" type="ID" use="required"/>
+    </complexType>
+
+    <complexType name="Depositor">
+        <sequence>
+            <element name="name">
+                <simpleType>
+                    <restriction base="tns:nonEmptyString">
+                        <maxLength value="40"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="deposits">
+                <complexType>
+                    <sequence>
+                        <element name="deposit" type="tns:Deposit" maxOccurs="unbounded"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+
+    <complexType name="Deposit">
+        <complexContent>
+            <extension base="tns:MoneyStorage">
+                <sequence>
+                    <element name="profitability">
+                        <simpleType>
+                            <restriction base="tns:nonNegativeDecimal"/>
+                        </simpleType>
+                    </element>
+                    <element name="depositTerm">
+                        <simpleType>
+                            <restriction base="date">
+                                <!-- TODO add pattern -->
+                            </restriction>
+                        </simpleType>
+                    </element>
+                    <element name="depositType">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="DEMAND_DEPOSIT"/>
+                                <enumeration value="FIXED_TERM_DEPOSIT"/>
+                                <enumeration value="SETTLEMENT_DEPOSIT"/>
+                                <enumeration value="SAVINGS_DEPOSIT"/>
+                                <enumeration value="ACCUMULATIVE_DEPOSIT"/>
+                                <enumeration value="METALLIC_DEPOSIT"/>
+                            </restriction>
+                        </simpleType>
+                    </element>
+                </sequence>
+                <attribute name="accountId" use="required" type="long"/>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="MoneyStorage">
+        <sequence>
+            <element name="moneyAmount">
+                <simpleType>
+                    <restriction base="tns:nonNegativeDecimal">
+                        <fractionDigits value="2"/>
+                    </restriction>
+                </simpleType>
+            </element>
+        </sequence>
+        <attribute name="currency" use="optional" default="USD">
+            <simpleType>
+                <restriction base="string">
+                    <enumeration value="USD"/>
+                    <enumeration value="EUR"/>
+                    <enumeration value="BYN"/>
+                    <enumeration value="RUB"/>
+                </restriction>
+            </simpleType>
+        </attribute>
+    </complexType>
+
+    <simpleType name="nonNegativeDecimal">
+        <restriction base="decimal">
+            <pattern value="(0|([1-9]\d*))(\.\d+)?"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="nonEmptyString">
+        <restriction base="string">
+            <minLength value="1"/>
+        </restriction>
+    </simpleType>
+
+</schema>

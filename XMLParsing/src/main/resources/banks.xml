@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<banks xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.example.com/banks"
+       xsi:schemaLocation="http://www.example.com/banks banks.xsd">
+    <bank bankId="b1">
+        <name>BSB</name>
+        <country>Belarus</country>
+        <depositors>
+            <depositor>
+                <name>Misha</name>
+                <deposits>
+                    <deposit accountId="12">
+                        <moneyAmount>500.45</moneyAmount>
+                        <profitability>3</profitability>
+                        <depositTerm>2020-12-02</depositTerm>
+                        <depositType>SAVINGS_DEPOSIT</depositType>
+                    </deposit>
+                    <deposit accountId="1" currency="BYN">
+                        <moneyAmount>399</moneyAmount>
+                        <profitability>45.36</profitability>
+                        <depositTerm>2020-12-18</depositTerm>
+                        <depositType>ACCUMULATIVE_DEPOSIT</depositType>
+                    </deposit>
+                    <deposit accountId="7" currency="RUB">
+                        <moneyAmount>4.63</moneyAmount>
+                        <profitability>454</profitability>
+                        <depositTerm>2014-03-08</depositTerm>
+                        <depositType>DEMAND_DEPOSIT</depositType>
+                    </deposit>
+                </deposits>
+            </depositor>
+        </depositors>
+    </bank>
+</banks>
