@@ -32,11 +32,11 @@ public class DomBuilder extends AbstractBuilder {
     private static final Logger logger = LogManager.getLogger();
     private DocumentBuilder documentBuilder;
 
-    { // TODO возможно стоит бросить exception
+    {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             documentBuilder = factory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
+        } catch (ParserConfigurationException e) { // impossible
             logger.log(Level.ERROR, e);
         }
     }
