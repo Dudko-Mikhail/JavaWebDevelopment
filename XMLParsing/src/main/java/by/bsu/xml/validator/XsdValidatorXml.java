@@ -18,9 +18,9 @@ public class XsdValidatorXml {
     private static final Logger logger = LogManager.getLogger();
     private Validator validator;
 
-    public XsdValidatorXml(String xsdFilePath) throws CustomXmlParseException {
+    public XsdValidatorXml(String xsdFilePath) throws CustomXmlParseException { // TODO change sentences (From Russian to English)
         if (!Files.exists(Path.of(xsdFilePath))) {
-            throw new CustomXmlParseException("Не удаётся найти указанный файл" + xsdFilePath);
+            throw new CustomXmlParseException("Cannot find xsd schema " + xsdFilePath);
         }
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         try {
@@ -33,13 +33,13 @@ public class XsdValidatorXml {
 
     public void validate(String xmlFilePath) throws CustomXmlParseException {
         if (!Files.exists(Path.of(xmlFilePath))) {
-            throw new CustomXmlParseException("Не удаётся найти указанный файл" + xmlFilePath);
+            throw new CustomXmlParseException("Cannot find xml file " + xmlFilePath);
         }
         try {
             validator.validate(new StreamSource(xmlFilePath));
         } catch (SAXException | IOException e) {
             throw new CustomXmlParseException(e);
         }
-        logger.info("XML file is valid");
+        logger.info("xml file is valid");
     }
 }
