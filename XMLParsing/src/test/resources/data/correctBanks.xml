@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<banks xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.example.com/banks"
+       xsi:schemaLocation="http://www.example.com/banks banks.xsd">
+    <bank bankId="b1">
+        <name>BSB</name>
+        <country>Belarus</country>
+        <depositors>
+            <depositor name="Misha">
+                <deposits>
+                    <deposit accountId="1">
+                        <moneyAmount>34.21</moneyAmount>
+                        <profitability>45</profitability>
+                        <depositTerm>2021-10-14</depositTerm>
+                        <depositType>SETTLEMENT_DEPOSIT</depositType>
+                    </deposit>
+                </deposits>
+            </depositor>
+        </depositors>
+    </bank>
+</banks>

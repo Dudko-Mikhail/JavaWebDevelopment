@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<banks xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.example.com/banks"
+       xsi:schemaLocation="http://www.example.com/banks banks.xsd">
+    <bank bankId="b1">
+        <name>VTB</name>
+        <country>Belarus</country>
+        <depositors>
+            <depositor name="Misha">
+                <deposits>
+                    <deposit accountId="1">
+                        <moneyAmount>34.21</moneyAmount>
+                        <profitability>5</profitability>
+                        <depositTerm>2021-10-14</depositTerm>
+                        <depositType>SETTLEMENT_DEPOSIT</depositType>
+                    </deposit>
+                </deposits>
+            </depositor>
+        </depositors>
+    </bank>
+    <bank bankId="b1">
+        <name>MTBank</name>
+        <country>Belarus</country>
+        <depositors>
+            <depositor name="Gosha">
+                <deposits>
+                    <deposit accountId="1">
+                        <moneyAmount>341</moneyAmount>
+                        <profitability>10</profitability>
+                        <depositTerm>2021-10-14</depositTerm>
+                        <depositType>METALLIC_DEPOSIT</depositType>
+                    </deposit>
+                </deposits>
+            </depositor>
+        </depositors>
+    </bank>
+</banks>
