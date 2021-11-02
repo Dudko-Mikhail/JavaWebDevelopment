@@ -4,7 +4,6 @@ import by.bsu.xml.constant.DepositType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Currency;
 
 public class Deposit extends MoneyStorage {
