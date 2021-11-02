@@ -13,6 +13,7 @@ public class Bank {
     public Bank() {
         depositors = new HashSet<>();
     }
+
     public Bank(String bankId, String name, String country) {
         this.bankId = bankId;
         this.name = name;
