@@ -15,23 +15,33 @@
                         <depositType>SAVINGS_DEPOSIT</depositType>
                     </deposit>
                     <deposit accountId="1" currency="BYN">
-                        <moneyAmount>399</moneyAmount>
+                        <moneyAmount>800.17</moneyAmount>
                         <profitability>45.36</profitability>
                         <depositTerm>2020-12-18</depositTerm>
                         <depositType>ACCUMULATIVE_DEPOSIT</depositType>
                     </deposit>
                     <deposit accountId="7" currency="RUB">
                         <moneyAmount>4.63</moneyAmount>
-                        <profitability>454</profitability>
+                        <profitability>10</profitability>
                         <depositTerm>2014-03-08</depositTerm>
                         <depositType>DEMAND_DEPOSIT</depositType>
                     </deposit>
                 </deposits>
             </depositor>
+            <depositor name="Yaroslav">
+                <deposits>
+                    <deposit accountId="2">
+                        <moneyAmount>1000</moneyAmount>
+                        <profitability>12</profitability>
+                        <depositTerm>2021-12-30</depositTerm>
+                        <depositType>FIXED_TERM_DEPOSIT</depositType>
+                    </deposit>
+                </deposits>
+            </depositor>
         </depositors>
     </bank>
-    <bank bankId="b41">
-        <name>BSB</name>
+    <bank bankId="b2">
+        <name>VTB</name>
         <country>Belarus</country>
         <depositors>
             <depositor name="Gosha">
@@ -43,16 +53,58 @@
                         <depositType>SAVINGS_DEPOSIT</depositType>
                     </deposit>
                     <deposit accountId="1" currency="BYN">
-                        <moneyAmount>399</moneyAmount>
-                        <profitability>45.36</profitability>
-                        <depositTerm>2020-12-18</depositTerm>
-                        <depositType>ACCUMULATIVE_DEPOSIT</depositType>
+                        <moneyAmount>478</moneyAmount>
+                        <profitability>14.36</profitability>
+                        <depositTerm>2021-12-18</depositTerm>
+                        <depositType>SETTLEMENT_DEPOSIT</depositType>
                     </deposit>
                     <deposit accountId="7" currency="RUB">
                         <moneyAmount>4.63</moneyAmount>
                         <profitability>454</profitability>
                         <depositTerm>2014-03-08</depositTerm>
                         <depositType>DEMAND_DEPOSIT</depositType>
+                    </deposit>
+                </deposits>
+            </depositor>
+            <depositor name="Kiril">
+                <deposits>
+                    <deposit accountId="4" currency="EUR">
+                        <moneyAmount>900.45</moneyAmount>
+                        <profitability>5</profitability>
+                        <depositTerm>2022-10-30</depositTerm>
+                        <depositType>SAVINGS_DEPOSIT</depositType>
+                    </deposit>
+                </deposits>
+            </depositor>
+        </depositors>
+    </bank>
+    <bank bankId="b3">
+        <name>Belinvestbank</name>
+        <country>Belarus</country>
+        <depositors>
+            <depositor name="Vlad">
+                <deposits>
+                    <deposit accountId="1">
+                        <moneyAmount>280</moneyAmount>
+                        <profitability>6</profitability>
+                        <depositTerm>2022-10-07</depositTerm>
+                        <depositType>SAVINGS_DEPOSIT</depositType>
+                    </deposit>
+                    <deposit accountId="2" currency="BYN">
+                        <moneyAmount>399</moneyAmount>
+                        <profitability>45.36</profitability>
+                        <depositTerm>2020-12-18</depositTerm>
+                        <depositType>ACCUMULATIVE_DEPOSIT</depositType>
+                    </deposit>
+                </deposits>
+            </depositor>
+            <depositor name="Ivan">
+                <deposits>
+                    <deposit accountId="3" currency="EUR">
+                        <moneyAmount>4100</moneyAmount>
+                        <profitability>2.05</profitability>
+                        <depositTerm>2022-04-20</depositTerm>
+                        <depositType>FIXED_TERM_DEPOSIT</depositType>
                     </deposit>
                 </deposits>
             </depositor>
