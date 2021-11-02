@@ -18,7 +18,7 @@ public class XsdValidatorXml {
     private static final Logger logger = LogManager.getLogger();
     private Validator validator;
 
-    public XsdValidatorXml(String xsdFilePath) throws CustomXmlParseException { // TODO change sentences (From Russian to English)
+    public XsdValidatorXml(String xsdFilePath) throws CustomXmlParseException {
         if (!Files.exists(Path.of(xsdFilePath))) {
             throw new CustomXmlParseException("Cannot find xsd schema " + xsdFilePath);
         }
@@ -40,6 +40,6 @@ public class XsdValidatorXml {
         } catch (SAXException | IOException e) {
             throw new CustomXmlParseException(e);
         }
-        logger.info("xml file is valid");
+        logger.info("xml file " + xmlFilePath + " is valid");
     }
 }
