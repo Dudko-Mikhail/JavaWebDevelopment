@@ -32,7 +32,7 @@ public class Symbol extends AbstractComponent {
     }
 
     private void defineSymbolType() {
-        String symbolString = String.valueOf(symbol).toLowerCase();
+        String symbolString = String.valueOf(symbol);
         SymbolType[] symbolTypes = SymbolType.values();
         for (SymbolType symbolType: symbolTypes) {
             if (symbolString.matches(symbolType.getRegex())) {

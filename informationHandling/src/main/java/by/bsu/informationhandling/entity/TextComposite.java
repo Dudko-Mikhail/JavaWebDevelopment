@@ -37,13 +37,9 @@ public class TextComposite extends AbstractComponent {
     public String restoreText() {
         StringBuilder sb = new StringBuilder();
         switch (getComponentType()) {
-            case TEXT -> {
-                components.forEach(c -> sb.append(AdditionalComponentText.PARAGRAPH_TEXT.getText())
-                                          .append(c.restoreText()));
-            }
-            case PARAGRAPH, LEXEME -> {
-                components.forEach(c -> sb.append(c.restoreText()));
-            }
+            case TEXT -> components.forEach(c -> sb.append(AdditionalComponentText.PARAGRAPH_TEXT.getText())
+                                                   .append(c.restoreText()));
+            case PARAGRAPH, LEXEME -> components.forEach(c -> sb.append(c.restoreText()));
             case SENTENCE -> {
                 for (int i = 0; i < components.size() - 1; i++) {
                     sb.append(components.get(i).restoreText())
