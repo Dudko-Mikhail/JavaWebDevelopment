@@ -10,7 +10,7 @@ public class Symbol extends AbstractComponent {
     public Symbol(char symbol) {
         super(ComponentType.SYMBOL);
         this.symbol = symbol;
-        defineSymbolType();
+        symbolType = defineSymbolType(symbol);
     }
 
     @Override
@@ -24,25 +24,22 @@ public class Symbol extends AbstractComponent {
 
     public void setSymbol(char symbol) {
         this.symbol = symbol;
-        defineSymbolType();
+        symbolType = defineSymbolType(symbol);
     }
 
     public SymbolType getSymbolType() {
         return symbolType;
     }
 
-    private void defineSymbolType() {
+    public static SymbolType defineSymbolType(char symbol) {
         String symbolString = String.valueOf(symbol);
         SymbolType[] symbolTypes = SymbolType.values();
         for (SymbolType symbolType: symbolTypes) {
             if (symbolString.matches(symbolType.getRegex())) {
-                this.symbolType = symbolType;
+                return symbolType;
             }
         }
-        if (symbolType == null) { // TODO Исключение либо SymbolType.UNDEFINED
-            symbolType = SymbolType.UNDEFINED;
-//            throw new EnumConstantNotPresentException(SymbolType.class , symbolString);
-        }
+        return SymbolType.UNDEFINED;
     }
 
     @Override
