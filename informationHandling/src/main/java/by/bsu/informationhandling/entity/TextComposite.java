@@ -7,18 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TextComposite extends AbstractComponent {
-    private List<AbstractComponent> components;
-
-    {
-        components = new ArrayList<>();
-    }
+    private final List<AbstractComponent> components;
 
     public TextComposite(ComponentType type) {
         super(type);
+        components = new ArrayList<>();
     }
 
     public AbstractComponent getChild(int index) {
         return components.get(index);
+    }
+
+    public List<AbstractComponent> getChildren() {
+        return components;
     }
 
     public int getComponentsAmount() {
@@ -39,8 +40,8 @@ public class TextComposite extends AbstractComponent {
         switch (getComponentType()) {
             case TEXT -> components.forEach(component -> {
                 String paragraphText = component.restoreText();
-                if (!paragraphText.endsWith("\n")) {
-                    paragraphText += "\n";
+                if (!paragraphText.endsWith(AdditionalComponentText.PARAGRAPH_END.getText())) {
+                    paragraphText += AdditionalComponentText.PARAGRAPH_END.getText();
                 }
                 sb.append(AdditionalComponentText.PARAGRAPH_TEXT.getText())
                         .append(paragraphText);

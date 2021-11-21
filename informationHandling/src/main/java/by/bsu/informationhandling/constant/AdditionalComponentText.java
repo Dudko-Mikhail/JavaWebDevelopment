@@ -2,7 +2,8 @@ package by.bsu.informationhandling.constant;
 
 public enum AdditionalComponentText {
     PARAGRAPH_TEXT(" ".repeat(4)),
-    LEXEME(" ");
+    LEXEME(" "),
+    PARAGRAPH_END("\n");
 
     private final String text;
 

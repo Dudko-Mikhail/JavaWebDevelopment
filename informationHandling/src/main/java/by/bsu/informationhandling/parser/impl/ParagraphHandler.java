@@ -1,8 +1,9 @@
-package by.bsu.informationhandling.parser;
+package by.bsu.informationhandling.parser.impl;
 
 import by.bsu.informationhandling.constant.ComponentRegex;
 import by.bsu.informationhandling.constant.ComponentType;
 import by.bsu.informationhandling.entity.TextComposite;
+import by.bsu.informationhandling.parser.CustomHandler;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -10,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class ParagraphHandler implements CustomHandler {
     private final CustomHandler successor = new SentenceHandler();
+
     @Override
     public TextComposite handleRequest(String paragraphText) {
         TextComposite paragraphComponent = new TextComposite(ComponentType.PARAGRAPH);

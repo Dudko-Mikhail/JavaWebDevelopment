@@ -2,6 +2,7 @@ package by.bsu.informationhandling.service.impl;
 
 import by.bsu.informationhandling.constant.ComponentType;
 import by.bsu.informationhandling.constant.SymbolType;
+import by.bsu.informationhandling.entity.AbstractComponent;
 import by.bsu.informationhandling.entity.Symbol;
 import by.bsu.informationhandling.entity.TextComposite;
 import by.bsu.informationhandling.exception.ServiceException;
@@ -14,14 +15,14 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class TextHandlingServiceImpl implements TextHandlingService {
-    private static final String WORD_REGEX = "(?ui)[a-zа-я]+?(('|-|-\n)?[a-zа-я]+)*";
-    private static TextHandlingServiceImpl INSTANCE;
+    private static final String WORD_REGEX = "(?ui)[a-zа-яё]+?((['-]|-\n)?[a-zа-яё]+)*"; // Дефис и перенос слова в конце строки неразличимы между собой
+    private static TextHandlingServiceImpl instance;
 
     public static TextHandlingServiceImpl getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new TextHandlingServiceImpl();
+        if (instance == null) {
+            instance = new TextHandlingServiceImpl();
         }
-        return INSTANCE;
+        return instance;
     }
 
     @Override
@@ -63,19 +64,19 @@ public class TextHandlingServiceImpl implements TextHandlingService {
     @Override
     public void deleteSentencesFromTextWithWordsLessThanGiven(TextComposite text, int border) throws ServiceException {
         checkComponentType(text, ComponentType.TEXT);
-        for (int i = 0; i < text.getComponentsAmount(); i++) {
-            TextComposite paragraph = (TextComposite) text.getChild(i);
-            for (int j = 0; j < paragraph.getComponentsAmount(); j++) {
-                String sentence = paragraph.getChild(j).restoreText();
+        Iterator<AbstractComponent> paragraphIterator = text.getChildren().iterator();
+        while (paragraphIterator.hasNext()) {
+            TextComposite paragraph = (TextComposite) paragraphIterator.next();
+            Iterator<AbstractComponent> sentenceIterator = paragraph.getChildren().iterator();
+            while (sentenceIterator.hasNext()) {
+                String sentence = sentenceIterator.next().restoreText();
                 int wordsCount = findWordsCount(sentence);
                 if (wordsCount < border) {
-                    paragraph.remove(paragraph.getChild(j));
-                    j--;
+                    sentenceIterator.remove();
                 }
             }
             if (paragraph.getComponentsAmount() == 0) {
-                text.remove(paragraph);
-                i--;
+                paragraphIterator.remove();
             }
         }
     }
@@ -100,9 +101,9 @@ public class TextHandlingServiceImpl implements TextHandlingService {
     public Map<SymbolType, Integer> findSymbolAmountInSentence(TextComposite sentence, EnumSet<SymbolType> searchCriteria) throws ServiceException {
         checkComponentType(sentence, ComponentType.SENTENCE);
         if (searchCriteria == null) {
-            return new HashMap<>();
+            return new EnumMap<>(SymbolType.class);
         }
-        Map<SymbolType, Integer> result = new HashMap<>();
+        Map<SymbolType, Integer> result = new EnumMap<>(SymbolType.class);
         for (SymbolType criterion: searchCriteria) {
             result.put(criterion, 0);
         }

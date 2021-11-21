@@ -1,11 +1,13 @@
-package by.bsu.informationhandling.parser;
+package by.bsu.informationhandling.parser.impl;
 
 import by.bsu.informationhandling.constant.ComponentRegex;
 import by.bsu.informationhandling.constant.ComponentType;
 import by.bsu.informationhandling.entity.TextComposite;
+import by.bsu.informationhandling.parser.CustomHandler;
 
 public class TextHandler implements CustomHandler {
     private final CustomHandler successor = new ParagraphHandler();
+
     @Override
     public TextComposite handleRequest(String text) {
         TextComposite textComponent = new TextComposite(ComponentType.TEXT);

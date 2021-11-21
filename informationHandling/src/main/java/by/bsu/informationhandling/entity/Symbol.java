@@ -4,27 +4,27 @@ import by.bsu.informationhandling.constant.ComponentType;
 import by.bsu.informationhandling.constant.SymbolType;
 
 public class Symbol extends AbstractComponent {
-    private char symbol;
+    private char value;
     private SymbolType symbolType;
 
-    public Symbol(char symbol) {
+    public Symbol(char value) {
         super(ComponentType.SYMBOL);
-        this.symbol = symbol;
-        symbolType = defineSymbolType(symbol);
+        this.value = value;
+        symbolType = Symbol.defineSymbolType(value);
     }
 
     @Override
     public String restoreText() {
-        return String.valueOf(symbol);
+        return String.valueOf(value);
     }
 
-    public char getSymbol() {
-        return symbol;
+    public char getValue() {
+        return value;
     }
 
-    public void setSymbol(char symbol) {
-        this.symbol = symbol;
-        symbolType = defineSymbolType(symbol);
+    public void setValue(char value) {
+        this.value = value;
+        symbolType = Symbol.defineSymbolType(value);
     }
 
     public SymbolType getSymbolType() {
@@ -49,13 +49,13 @@ public class Symbol extends AbstractComponent {
 
         Symbol symbol1 = (Symbol) o;
 
-        if (symbol != symbol1.symbol) return false;
+        if (value != symbol1.value) return false;
         return symbolType == symbol1.symbolType;
     }
 
     @Override
     public int hashCode() {
-        int result = symbol;
+        int result = value;
         result = 31 * result + symbolType.hashCode();
         return result;
     }
@@ -63,7 +63,7 @@ public class Symbol extends AbstractComponent {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Symbol{");
-        sb.append("symbol=").append(symbol);
+        sb.append("symbol=").append(value);
         sb.append(", symbolType=").append(symbolType);
         sb.append('}');
         return sb.toString();

@@ -1,16 +1,18 @@
 package by.bsu.informationhandling.service.impl;
 
+import by.bsu.informationhandling.constant.ComponentType;
 import by.bsu.informationhandling.constant.SymbolType;
 import by.bsu.informationhandling.entity.TextComposite;
 import by.bsu.informationhandling.exception.ServiceException;
-import by.bsu.informationhandling.parser.SentenceHandler;
-import by.bsu.informationhandling.parser.TextHandler;
+import by.bsu.informationhandling.parser.impl.SentenceHandler;
+import by.bsu.informationhandling.parser.impl.TextHandler;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,7 @@ public class TextHandlingServiceImplTest {
                 {"Привет мир!", EnumSet.of(SymbolType.CONSONANT_RUSSIAN, SymbolType.VOWEL_RUSSIAN), Map.of(SymbolType.CONSONANT_RUSSIAN, 6, SymbolType.VOWEL_RUSSIAN, 3)},
                 {"Доброго дня\nвсем вам.", EnumSet.of(SymbolType.SPACE, SymbolType.NEW_LINE), Map.of(SymbolType.SPACE, 2, SymbolType.NEW_LINE, 1)},
                 {"12345 я иду искать в подъезд.", EnumSet.of(SymbolType.DIGIT, SymbolType.SIGN_RUSSIAN), Map.of(SymbolType.DIGIT, 5, SymbolType.SIGN_RUSSIAN, 2)},
+                {"12345 я иду искать в подъезд.", null, new HashMap<>()}
         };
     }
 
@@ -55,7 +58,11 @@ public class TextHandlingServiceImplTest {
     public Object[][] textAndAnswerMapProvider() {
         return new Object[][] {
                 {"    Hello heLlO worD! Word is good. Is it right! No, it isn't", Map.of("hello", 2, "is", 2, "word", 2)},
-                {"    Help me please. Please, help me. I need help. So do i.", Map.of("help", 3, "me", 2, "please", 2, "i", 2)}
+                {"    Help me please. Please, help me. I need help. So do i.", Map.of("help", 3, "me", 2, "please", 2, "i", 2)},
+                {"    Точь-в-точь так всё и было, точь-в-точь. It's my life! It's a big cat.", Map.of("точь-в-точь", 2, "it's", 2)},
+                {"    Точь-в-точь так всё и было, точь-в-точь. It's my life! It's a big cat.", Map.of("точь-в-точь", 2, "it's", 2)},
+                {"    Привет сине-\nбелый снегопад. Был он сине-\nбелый.", Map.of("сине-белый", 2)}, // Дефис и перенос в конце строки неразличимы
+                {"    Жили у бабуси два весё-\nлых гуся...\nДва весё-\nлых гуся.", Map.of("гуся", 2, "весё-лых", 2, "два", 2)}
         };
     }
 
@@ -96,7 +103,7 @@ public class TextHandlingServiceImplTest {
     }
 
     @Test(dataProvider = "findSameWordsAndTheirCountInTextProvider")
-    public void findSameWordsAndTheirCountInTextTest(String text, Map<String, Integer> expected) throws ServiceException { // TODO: 12.11.2021
+    public void findSameWordsAndTheirCountInTextTest(String text, Map<String, Integer> expected) throws ServiceException {
         TextHandler handler = new TextHandler();
         TextComposite composite = handler.handleRequest(text);
         Map<String, Integer> actual = service.findSameWordsAndTheirCountInText(composite);
@@ -109,5 +116,11 @@ public class TextHandlingServiceImplTest {
         TextComposite sentenceComponent = handler.handleRequest(sentence);
         Map<SymbolType, Integer> actual = service.findSymbolAmountInSentence(sentenceComponent, criteria);
         Assert.assertEquals(actual, expected);
+    }
+
+    @Test(expectedExceptions = ServiceException.class)
+    public void findSentenceWithLongestWordExceptionTest() throws ServiceException {
+        TextComposite paragraph = new TextComposite(ComponentType.PARAGRAPH);
+        service.findSentenceWithLongestWord(paragraph);
     }
 }
