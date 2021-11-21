@@ -7,6 +7,8 @@ import by.bsu.informationhandling.entity.Symbol;
 import by.bsu.informationhandling.entity.TextComposite;
 import by.bsu.informationhandling.exception.ServiceException;
 import by.bsu.informationhandling.service.TextHandlingService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class TextHandlingServiceImpl implements TextHandlingService {
+    private static final Logger logger = LogManager.getLogger();
     private static final String WORD_REGEX = "(?ui)[a-zа-яё]+?((['-]|-\n)?[a-zа-яё]+)*"; // Дефис и перенос слова в конце строки неразличимы между собой
     private static TextHandlingServiceImpl instance;
 
@@ -122,9 +125,12 @@ public class TextHandlingServiceImpl implements TextHandlingService {
         return result;
     }
 
-    private void checkComponentType(TextComposite composite, ComponentType type) throws ServiceException {
-        if (composite == null || composite.getComponentType() != type) {
-            throw new ServiceException();
+    private void checkComponentType(TextComposite composite, ComponentType expectedType) throws ServiceException {
+        if (composite == null || composite.getComponentType() != expectedType) {
+            ComponentType actualType = composite != null ? composite.getComponentType() : null;
+            ServiceException exception = new ServiceException("Invalid component type " + actualType + ". Expected type is " + expectedType);
+            logger.catching(exception);
+            throw exception;
         }
     }
 
