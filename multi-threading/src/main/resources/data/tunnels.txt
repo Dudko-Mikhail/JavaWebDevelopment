@@ -1,2 +1,2 @@
-HIGH 2 2 Catrina
-LOW 3 2 Cromwell
+2 MEDIUM 3 Catrina
+3 LOW 4 Cromwell

@@ -30,74 +30,60 @@ public class Tunnel {
         this.oneDirectionSeriesLimit = oneDirectionSeriesLimit;
         this.name = name;
         attemptSeriesLimitToNeglectPriority = oneDirectionSeriesLimit * 4;
-        trainsBeforeTunnelSemaphore = new Semaphore(trainsInOneDirectionLimit * 2);
-        forwardDirectionSemaphore = new Semaphore(trainsInOneDirectionLimit);
-        reversedDirectionSemaphore = new Semaphore(trainsInOneDirectionLimit);
+        trainsBeforeTunnelSemaphore = new Semaphore(trainsInOneDirectionLimit * 2, true);
+        forwardDirectionSemaphore = new Semaphore(trainsInOneDirectionLimit, true);
+        reversedDirectionSemaphore = new Semaphore(trainsInOneDirectionLimit, true);
         lock = new ReentrantLock();
         currentReversedDirectionSeries = new AtomicInteger();
         currentForwardDirectionSeries = new AtomicInteger();
         attemptsToNeglectPriority = new AtomicInteger();
     }
 
-    public boolean tryAcceptTrain(Train train) throws InterruptedException {
+    public boolean tryAcceptTrain(Train train) {
+        boolean isAccepted = false;
         try {
             lock.lock();
-            logger.info(String.format("Train %d is trying to pass through the tunnel %s", train.getId(), name));
+            logger.info(String.format("Train %d is trying to pass through tunnel %s", train.getId(), name));
             if (trainsBeforeTunnelSemaphore.availablePermits() == oneDirectionSeriesLimit * 2) { // тоннель пуст
-                priorityDirection = null;
-            }
-            if (priorityDirection == null) {
                 priorityDirection = train.getDirection();
-                getDirectionSeries(priorityDirection).incrementAndGet();
-                givePermission(train);
-                return true;
             }
-            System.out.println(attemptsToNeglectPriority); // TODO: 28.11.2021 remove
-            System.out.println(trainsBeforeTunnelSemaphore.availablePermits());
             if (train.getDirection() == priorityDirection) {
                 if (getDirectionSeries(priorityDirection).incrementAndGet() <= oneDirectionSeriesLimit) {
-                    attemptsToNeglectPriority.set(0);
-                    givePermission(train);
-                    return true;
-                }
-                else {
+                    isAccepted = true;
+                } else { // достигнуто максимальное число поездов, прошедших подряд в одном направлении
                     resetDirectionSeries();
                     priorityDirection = priorityDirection.getOppositeDirection();
                     attemptsToNeglectPriority.set(0);
-                    logger.info(String.format("Tunnel %s. Permission denied for train %d in %s direction", name, train.getId(), train.getDirection()));
-                    return false;
                 }
-            }
-            else if (attemptsToNeglectPriority.incrementAndGet() > attemptSeriesLimitToNeglectPriority) {
-                attemptsToNeglectPriority.set(0);
+            } else if (attemptsToNeglectPriority.incrementAndGet() > attemptSeriesLimitToNeglectPriority) {
                 resetDirectionSeries();
                 priorityDirection = train.getDirection();
                 logger.info("Attempts count to neglect priority reached the limit. New priority direction: " + priorityDirection);
                 getDirectionSeries(priorityDirection).incrementAndGet();
+                isAccepted = true;
+            }
+            return isAccepted;
+        } finally {
+            lock.unlock();
+            if (isAccepted) {
                 givePermission(train);
-                return true;
-            }
-            else {
+            } else {
                 logger.info(String.format("Tunnel %s. Permission denied for train %d in %s direction", name, train.getId(), train.getDirection()));
-                return false;
-            }
-        }
-        finally {
-            if (lock.isLocked()) {
-                lock.unlock();
             }
         }
     }
 
-    private void acceptTrain(Train train) throws InterruptedException {
+    private void acceptTrain(Train train) {
         try {
             trainsBeforeTunnelSemaphore.acquire();
             acquireDirectionSemaphore(train);
-            logger.info(String.format("Train %d entered the tunnel %s in %s direction", train.getId(), name, train.getDirection()));
+            logger.info(String.format("Train %d entered tunnel %s in %s direction", train.getId(), name, train.getDirection()));
             TimeUnit.MILLISECONDS.sleep(passingTime.getMillis());
-            logger.info(String.format("Train %d left the tunnel %s", train.getId(), name));
-        }
-        finally {
+            logger.info(String.format("Train %d left tunnel %s", train.getId(), name));
+        } catch (InterruptedException e) {
+            logger.warn(e);
+            Thread.currentThread().interrupt();
+        } finally {
             releaseSemaphore(train);
             trainsBeforeTunnelSemaphore.release();
         }
@@ -132,9 +118,8 @@ public class Tunnel {
         }
     }
 
-    private void givePermission(Train train) throws InterruptedException {
-        trainsBeforeTunnelSemaphore.acquire();
-        lock.unlock();
+    private void givePermission(Train train) {
+        attemptsToNeglectPriority.set(0);
         acceptTrain(train);
     }
 

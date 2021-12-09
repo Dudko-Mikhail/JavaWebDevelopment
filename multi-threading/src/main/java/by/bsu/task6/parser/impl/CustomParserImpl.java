@@ -30,9 +30,9 @@ public class CustomParserImpl implements CustomParser {
         return lines.stream()
                 .map(line -> {
                     String[] data = line.split("\\s");
-                    PassingTime passingTime = PassingTime.valueOf(data[0].toUpperCase());
-                    int oneDirectionSeriesLimit = Integer.parseInt(data[1]);
-                    int trainsInOneDirectionLimit = Integer.parseInt(data[2]);
+                    int trainsInOneDirectionLimit = Integer.parseInt(data[0]);
+                    PassingTime passingTime = PassingTime.valueOf(data[1].toUpperCase());
+                    int oneDirectionSeriesLimit = Integer.parseInt(data[2]);
                     String tunnelName = data[3];
                     return new Tunnel(trainsInOneDirectionLimit, passingTime, oneDirectionSeriesLimit, tunnelName);
                 })

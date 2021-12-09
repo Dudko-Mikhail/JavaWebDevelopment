@@ -1,9 +1,9 @@
 package by.bsu.task6.entity.train;
 
 public enum TrainSpeed {
-    LOW(9000),
-    MEDIUM(6000),
-    HIGH(4000);
+    LOW(6000),
+    MEDIUM(4000),
+    HIGH(2000);
 
     private long millis;
 

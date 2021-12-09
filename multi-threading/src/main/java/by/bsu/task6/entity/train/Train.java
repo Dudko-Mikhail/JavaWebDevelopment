@@ -51,11 +51,11 @@ public class Train extends Thread {
                 Thread.currentThread().interrupt();
             }
         }
-        logger.info(String.format("The train %d went through all the tunnels", getId()));
+        logger.info(String.format("Train %d went through all tunnels", getId()));
     }
 
     private void move() throws InterruptedException {
-        logger.log(Level.INFO, String.format("Train %d. CurrentState: %s", getId(), trainState)); // FIXME: 24.11.2021
+        logger.info(String.format("Train %d. CurrentState: %s", getId(), trainState));
         switch (trainState) {
             case FIRST_TUNNEL, SECOND_TUNNEL -> {
                 TunnelHolder holder = TunnelHolder.getInstance();
@@ -67,9 +67,7 @@ public class Train extends Thread {
             case BEFORE_TUNNEL -> TimeUnit.MILLISECONDS.sleep(beforeFirstTunnelSleepTime);
             default -> TimeUnit.MILLISECONDS.sleep(speed.getMillis());
         }
-        if (trainState != TrainState.END) {
-            trainState = trainState.toNextState();
-        }
+        trainState = trainState.toNextState();
     }
 
     @Override
